@@ -1001,25 +1001,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const textMsg = `🚀 New Client Alert - Ashu Studio 47!\n\n👤 Name: ${name}\n📧 Email: ${email}\n💬 Message: ${msg}\n\n${extraInfo}`;
 
-        const botToken = '8823529767:AAFdwiKgf5jas1qUxCFOZFIj4UxX4dTfsKU'; 
-        const chatId = '8311834339';
+       const scriptUrl = 'https://script.google.com/macros/s/AKfycbzce0u3_AnxM71VhGp8JpoS5JnEXHvrg-wZxShu2VvaCXQd9Wl18_wjH-G5fIWJKKQ/exec'; 
 
-        try {
-            const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: textMsg })
-            });
+try {
+    await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: textMsg })
+    });
 
-            if (response.ok) {
-                form.innerHTML = `
-                    <div class="text-center py-10">
-                        <h3 class="text-2xl font-bold text-brand-oceanBlue mb-2">Message Sent Successfully! ✅</h3>
-                        <p class="text-gray-400">Ashu will contact you soon.</p>
-                    </div>`;
-            } else {
-                throw new Error();
-            }
+    form.innerHTML = `
+        <div class="text-center py-10">
+            <h3 class="text-2xl font-bold text-brand-oceanBlue mb-2">Message Sent Successfully! ✅</h3>
+            <p class="text-gray-400">Ashu will contact you soon.</p>
+        </div>`;
         } catch (error) {
             alert('Error aa gaya. Dobara try karo!');
             submitBtn.disabled = false;
