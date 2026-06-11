@@ -603,35 +603,12 @@
 
                     <!-- Glassmorphism Form -->
                     <div class="w-full lg:w-7/12 reveal" style="transition-delay: 200ms;">
-                        <form class="space-y-5" onsubmit="event.preventDefault(); this.innerHTML = '<div class=\'text-center py-10\'><i data-lucide=\'check-circle\' class=\'w-16 h-16 text-brand-oceanBlue mx-auto mb-4\'></i><h3 class=\'text-2xl font-bold text-white mb-2\'>Message Sent</h3><p class=\'text-gray-400\'>We will get back to you shortly.</p></div>'; lucide.createIcons();">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div class="space-y-1.5">
-                                    <label class="text-[10px] text-gray-400 uppercase tracking-widest font-bold pl-1">Name</label>
-                                    <input type="text" class="w-full bg-[#0a0a0a]/80 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-oceanBlue focus:ring-1 focus:ring-brand-oceanBlue transition-all placeholder:text-gray-600" placeholder="John Doe" required>
-                                </div>
-                                <div class="space-y-1.5">
-                                    <label class="text-[10px] text-gray-400 uppercase tracking-widest font-bold pl-1">Email</label>
-                                    <input type="email" class="w-full bg-[#0a0a0a]/80 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-oceanBlue focus:ring-1 focus:ring-brand-oceanBlue transition-all placeholder:text-gray-600" placeholder="john@example.com" required>
-                                </div>
-                            </div>
-                            <div class="space-y-1.5">
-                                <label class="text-[10px] text-gray-400 uppercase tracking-widest font-bold pl-1">Interested In</label>
-                                <select class="w-full bg-[#0a0a0a]/80 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-oceanBlue focus:ring-1 focus:ring-brand-oceanBlue transition-all appearance-none cursor-pointer">
-                                    <option value="branding">Business Branding & Promotion</option>
-                                    <option value="video">YouTube Video Editing</option>
-                                    <option value="web">Website Development</option>
-                                    <option value="design">Posters / Ads / Thumbnails</option>
-                                    <option value="ai">AI Creativity</option>
-                                </select>
-                            </div>
-                            <div class="space-y-1.5">
-                                <label class="text-[10px] text-gray-400 uppercase tracking-widest font-bold pl-1">Project Details</label>
-                                <textarea rows="4" class="w-full bg-[#0a0a0a]/80 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all resize-none placeholder:text-gray-600" placeholder="Tell us about your goals..." required></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-white text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-brand-oceanBlue hover:text-white transition-all duration-300 mt-2 text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(0,168,255,0.4)]">
-                                Submit Request
-                            </button>
-                        </form>
+                      <form id="tg-form" class="space-y-4">
+    <input type="text" id="tg-name" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-oceanBlue" required>
+    <input type="email" id="tg-email" placeholder="Your Email" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-oceanBlue" required>
+    <textarea id="tg-msg" placeholder="Your Message" rows="4" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-oceanBlue" required></textarea>
+    <button type="submit" class="w-full bg-brand-oceanBlue hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Send Message 🚀</button>
+</form>
                     </div>
                 </div>
             </div>
@@ -906,40 +883,37 @@
     </script>
 
 <script>
-  // Real Telegram Message Sender
+  // Smart Telegram Sender
   setTimeout(() => {
-    const tgForm = document.querySelector('form');
-    if(tgForm) {
-        // Purana fake animation hatane ke liye form ko reset kar rahe hain
-        const newForm = tgForm.cloneNode(true);
-        tgForm.parentNode.replaceChild(newForm, tgForm);
+      const contactForm = document.getElementById('tg-form');
+      if(contactForm) {
+          // Purane kisi bhi fake animation ko rokne ke liye naya form replace karna
+          const newForm = contactForm.cloneNode(true);
+          contactForm.parentNode.replaceChild(newForm, contactForm);
 
-        newForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+          newForm.addEventListener('submit', function(e) {
+              e.preventDefault(); // Page ko refresh hone se rokna
 
-            // 🔴 YAHAN APNA TOKEN AUR CHAT ID DAALEIN (Quotes '' ke andar) 🔴
-            const botToken = '8823529767:AAFdwiKgf5jas1qUxCFOZFIj4UxX4dTfsKU'; 
-            const chatId = '8311834339';
+              // 🔴 YAHAN APNA TOKEN AUR CHAT ID DAALEIN 🔴
+              const botToken = '8823529767:AAFdwiKgf5jas1qUxCFOZFIj4UxX4dTfsKU'; 
+              const chatId = '8311834339';
 
-            // Box se data nikalna
-            const inputs = newForm.querySelectorAll('input, textarea');
-            const name = inputs[0] ? inputs[0].value : 'N/A';
-            const email = inputs[1] ? inputs[1].value : 'N/A';
-            const msg = newForm.querySelector('textarea') ? newForm.querySelector('textarea').value : 'N/A';
+              // Naye boxes se asli data nikalna
+              const name = document.getElementById('tg-name').value;
+              const email = document.getElementById('tg-email').value;
+              const msg = document.getElementById('tg-msg').value;
 
-            // Message ka design
-            const textMsg = `🚀 New Client Alert - Ashu Studio 47!\n\n👤 Name: ${name}\n📧 Email: ${email}\n💬 Message: ${msg}`;
+              // Message ka style
+              const textMsg = `🚀 New Client Alert - Ashu Studio 47!\n\n👤 Name: ${name}\n📧 Email: ${email}\n💬 Message: ${msg}`;
 
-            // Telegram ko message bhejna
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(textMsg)}`)
-            .then(response => {
-                // Success hone par ye dikhega
-                newForm.innerHTML = '<div class="text-center py-10"><div class="w-16 h-16 bg-brand-oceanBlue/20 text-brand-oceanBlue rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="check-circle" class="w-8 h-8"></i></div><h3 class="text-xl font-bold text-white mb-2">Message Sent Directly!</h3><p class="text-gray-400">Ashu will contact you soon.</p></div>';
-                if(typeof lucide !== 'undefined') lucide.createIcons();
-            })
-            .catch(error => alert('Oh no! Kuch gadbad ho gayi.'));
-        });
-    }
+              // Telegram ko bhejna
+              fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(textMsg)}`)
+              .then(() => {
+                  newForm.innerHTML = '<div class="text-center py-10"><h3 class="text-2xl font-bold text-brand-oceanBlue mb-2">Message Sent! ✅</h3><p class="text-gray-400">Ashu will contact you soon.</p></div>';
+              })
+              .catch(() => alert('Oops! Kuch error aa gaya.'));
+          });
+      }
   }, 1000);
 </script>
     
